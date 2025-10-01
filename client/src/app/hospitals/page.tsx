@@ -1,14 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type {
-  Hospital,
-  PostalAddress,
-  GeoCoordinates,
-  MedicalSpecialty,
-  AvailableService,
-  ContactPoint,
-} from "~/types/hospital";
+import type { Hospital } from "~/types/hospital";
 import { HospitalSchema, toJsonLd } from "~/types/hospital";
 
 export default function HospitalsPage() {
@@ -126,7 +119,7 @@ export default function HospitalsPage() {
   const addSocialLink = () => {
     setFormData({
       ...formData,
-      sameAs: [...(formData.sameAs || []), ""],
+      sameAs: [...(formData.sameAs ?? []), ""],
     });
   };
 
@@ -446,7 +439,7 @@ export default function HospitalsPage() {
                     placeholder="https://..."
                     value={link}
                     onChange={(e) => {
-                      const updated = [...(formData.sameAs || [])];
+                      const updated = [...(formData.sameAs ?? [])];
                       updated[index] = e.target.value;
                       setFormData({ ...formData, sameAs: updated });
                     }}
@@ -546,7 +539,7 @@ export default function HospitalsPage() {
                       </pre>
                       <button
                         onClick={() => {
-                          navigator.clipboard.writeText(
+                          void navigator.clipboard.writeText(
                             JSON.stringify(toJsonLd(hospital), null, 2),
                           );
                           alert("JSON-LD copied to clipboard!");
